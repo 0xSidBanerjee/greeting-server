@@ -12,6 +12,9 @@ public class Main {
     @Parameter(names = {"--port", "-p"}, description = "Port to listen on")
     private int port = 6666;
 
+    @Parameter(names = {"--timeout", "-t"}, description = "Idle Timeout value for each connection")
+    private int timeout = 45;
+
     public static void main(String[] args) throws IOException {
         Main main = new Main();
         JCommander commander = JCommander.newBuilder()
@@ -23,8 +26,7 @@ public class Main {
     }
 
     private void run() throws IOException {
-        log.info("Starting greeting server on port {}", port);
-        GreetingServer server = new GreetingServer(port);
+        GreetingServer server = new GreetingServer(port, timeout);
         server.start();
     }
 }
