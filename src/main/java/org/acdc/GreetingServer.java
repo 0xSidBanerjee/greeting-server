@@ -15,11 +15,11 @@ public class GreetingServer {
 
     public void start() throws IOException {
         try(ServerSocket serverSocket = new ServerSocket(port)){
+            log.info("Starting server on port {} with timeout {}", port, timeout);
             while(true) {
-                log.info("Starting server on port {} with timeout {}", port, timeout);
                 Socket clientSocket = serverSocket.accept();
                 log.info("New connection from {}", clientSocket.getRemoteSocketAddress());
-                Thread thread = new Thread(new clientHandler(clientSocket, timeout));
+                Thread thread = new Thread(new ClientHandler(clientSocket, timeout));
                 thread.start();
             }
         }

@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.io.IOException;
 
 @Slf4j
-public class Main {
+public class GreetingServerApplication {
 
     @Parameter(names = {"--port", "-p"}, description = "Port to listen on")
     private int port = 6666;
@@ -16,13 +16,13 @@ public class Main {
     private int timeout = 45;
 
     public static void main(String[] args) throws IOException {
-        Main main = new Main();
+        GreetingServerApplication app = new GreetingServerApplication();
         JCommander commander = JCommander.newBuilder()
-                .addObject(main)
+                .addObject(app)
                 .build();
 
         commander.parse(args);
-        main.run();
+        app.run();
     }
 
     private void run() throws IOException {

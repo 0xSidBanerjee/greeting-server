@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClass.set("org.acdc.Main")
+    mainClass.set("org.acdc.GreetingServerApplication")
 }
 
 group = "org.acdc"
@@ -37,7 +37,7 @@ dependencies {
 
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "org.acdc.Main"
+        attributes["Main-Class"] = "org.acdc.GreetingServerApplication"
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from({
