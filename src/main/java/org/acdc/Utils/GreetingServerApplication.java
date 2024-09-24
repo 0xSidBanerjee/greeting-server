@@ -1,4 +1,4 @@
-package org.acdc;
+package org.acdc.Utils;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
