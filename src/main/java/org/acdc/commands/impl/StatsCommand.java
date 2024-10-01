@@ -8,10 +8,15 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.List;
 
-public class DefaultCommand implements Command {
+public class StatsCommand implements Command {
+
     @Override
     public boolean execute(List<String> arguments, Reader in, PrintWriter out, SessionContext context) throws IOException {
-        out.println("400 Bad Request");
+        String name = context.get("NAME");
+        String location = context.get("LOCATION");
+        String commandCount = context.get("COMMANDS");
+
+        out.println(String.format("202 STATS NAME: %s, LOCATION: %s, COMMANDS: %s", name, location, commandCount));
         return true;
     }
 }

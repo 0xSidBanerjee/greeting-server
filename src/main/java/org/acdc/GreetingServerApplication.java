@@ -1,4 +1,4 @@
-package org.acdc.Utils;
+package org.acdc;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
@@ -15,6 +15,9 @@ public class GreetingServerApplication {
     @Parameter(names = {"--timeout", "-t"}, description = "Idle Timeout value for each connection")
     private int timeout = 45;
 
+    @Parameter(names = {"--motd"}, description = "Display message of the day")
+    private String motd;
+
     public static void main(String[] args) throws IOException {
         GreetingServerApplication app = new GreetingServerApplication();
         JCommander commander = JCommander.newBuilder()
@@ -26,7 +29,7 @@ public class GreetingServerApplication {
     }
 
     private void run() throws IOException {
-        GreetingServer server = new GreetingServer(port, timeout);
+        GreetingServer server = new GreetingServer(port, timeout, motd);
         server.start();
     }
 }

@@ -7,11 +7,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.List;
+import java.util.UUID;
 
-public class DefaultCommand implements Command {
+public class IdentifyCommand implements Command {
+
     @Override
     public boolean execute(List<String> arguments, Reader in, PrintWriter out, SessionContext context) throws IOException {
-        out.println("400 Bad Request");
+        String sessionId = UUID.randomUUID().toString();
+        context.add("SESSION_ID", sessionId);
+        out.printf("201 Session ID generated: %s%n", sessionId);
         return true;
     }
 }

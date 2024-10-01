@@ -1,4 +1,4 @@
-package org.acdc.Utils;
+package org.acdc;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +12,7 @@ import java.net.Socket;
 public class GreetingServer {
     private int port;
     private int timeout;
+    private String motd;
 
     public void start() throws IOException {
         try(ServerSocket serverSocket = new ServerSocket(port)){
@@ -19,7 +20,7 @@ public class GreetingServer {
             while(true) {
                 Socket clientSocket = serverSocket.accept();
                 log.info("New connection from {}", clientSocket.getRemoteSocketAddress());
-                Thread thread = new Thread(new ClientHandler(clientSocket, timeout));
+                Thread thread = new Thread(new ClientHandler(clientSocket, timeout, motd));
                 thread.start();
             }
         }

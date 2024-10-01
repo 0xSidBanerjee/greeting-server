@@ -1,8 +1,9 @@
-package org.acdc.Utils;
+package org.acdc;
 
+import com.github.lalyos.jfiglet.FigletFont;
 import lombok.extern.slf4j.Slf4j;
+import org.acdc.Utils.ParseUtil;
 import org.acdc.commands.CommandInvoker;
-import org.acdc.commands.impl.QuitCommandException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,20 +17,27 @@ public class ClientHandler implements Runnable {
     private Socket clientSocket;
     private int timeout;
     private CommandInvoker invoker;
+    private String motd;
 
-    public ClientHandler(Socket clientSocket, int timeout) {
+    public ClientHandler(Socket clientSocket, int timeout, String motd) {
         this.clientSocket = clientSocket;
         this.timeout = timeout;
         this.invoker = new CommandInvoker();
+        this.motd = motd;
     }
 
     @Override
     public void run() {
-        try(BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
+        try (BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true)) {
             try {
                 SessionContext context = new SessionContext();
                 clientSocket.setSoTimeout(timeout * 1000);
+
+                if (!motd.isEmpty()) {
+                    String asciiMotd = FigletFont.convertOneLine(motd);
+                    out.println(asciiMotd);
+                }
 
                 out.println("200 Server ready");
 
@@ -37,9 +45,10 @@ public class ClientHandler implements Runnable {
 
                 while ((inputLine = in.readLine()) != null) {
 
-                        if(!this.invoker.executeCommand(ParseUtil.parseInput(inputLine), in, out, context)){
-                            return;
-                        }
+
+                    if (!this.invoker.executeCommand(ParseUtil.parseInput(inputLine), in, out, context)) {
+                        return;
+                    }
 
                 }
             } catch (SocketTimeoutException e) {

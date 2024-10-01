@@ -8,10 +8,13 @@ import java.io.PrintWriter;
 import java.io.Reader;
 import java.util.List;
 
-public class DefaultCommand implements Command {
+public class FarewellCommand implements Command {
+
     @Override
     public boolean execute(List<String> arguments, Reader in, PrintWriter out, SessionContext context) throws IOException {
-        out.println("400 Bad Request");
+        String farewellMessage = String.join(" ", arguments);
+        context.add("FAREWELL", farewellMessage);
+        out.println("201 FAREWELL ok");
         return true;
     }
 }

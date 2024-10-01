@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClass.set("org.acdc.Utils.GreetingServerApplication")
+    mainClass.set("org.acdc.GreetingServerApplication")
 }
 
 group = "org.acdc"
@@ -33,11 +33,17 @@ dependencies {
 
     // Mockito
     testImplementation("org.mockito:mockito-core:5.13.0")
+
+    // Faker
+    implementation("com.github.javafaker:javafaker:1.0.2")
+
+    // JFiglet
+    implementation("com.github.lalyos:jfiglet:0.0.9")
 }
 
 tasks.jar {
     manifest {
-        attributes["Main-Class"] = "org.acdc.Utils.GreetingServerApplication"
+        attributes["Main-Class"] = "org.acdc.GreetingServerApplication"
     }
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     from({

@@ -1,4 +1,4 @@
-package org.acdc.Utils;
+package org.acdc;
 
 import lombok.*;
 
