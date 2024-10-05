@@ -34,6 +34,7 @@ public class CommandInvoker {
         String commandName = parsedCommand.getName();
         Command command = commandMap.getOrDefault(commandName, new DefaultCommand());
         boolean canContinue = command.execute(parsedCommand.getArguments(), in, out, context);
+        context.incrementCommandCount();
         return canContinue;
     }
 }

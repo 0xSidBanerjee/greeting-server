@@ -14,9 +14,8 @@ public class StatsCommand implements Command {
     public boolean execute(List<String> arguments, Reader in, PrintWriter out, SessionContext context) throws IOException {
         String name = context.get("NAME");
         String location = context.get("LOCATION");
-        String commandCount = context.get("COMMANDS");
 
-        out.println(String.format("202 STATS NAME: %s, LOCATION: %s, COMMANDS: %s", name, location, commandCount));
+        out.println(String.format("202 STATS NAME: %s, LOCATION: %s, COMMANDS: %s", name, location, context.getCommandCount()));
         return true;
     }
 }

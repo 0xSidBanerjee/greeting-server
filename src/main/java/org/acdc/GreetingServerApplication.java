@@ -16,7 +16,7 @@ public class GreetingServerApplication {
     private int timeout = 45;
 
     @Parameter(names = {"--motd"}, description = "Display message of the day")
-    private String motd;
+    private String motd = "Don't Panic!";
 
     public static void main(String[] args) throws IOException {
         GreetingServerApplication app = new GreetingServerApplication();

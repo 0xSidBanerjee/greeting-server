@@ -20,22 +20,16 @@ public class LoadCommand implements Command {
         }
 
         try (BufferedReader fileReader = new BufferedReader(new FileReader(preferenceFile))) {
-            Map<String, String> preferences = new HashMap<>();
             String line;
             while ((line = fileReader.readLine()) != null) {
-                String[] parts = line.split(" : ");
+                String[] parts = line.split("=");
                 if (parts.length == 2) {
-                    preferences.put(parts[0], parts[1]);
+                    context.add(parts[0], parts[1]);
                 }
             }
-            preferences.forEach(context::add);
 
             StringBuilder response = new StringBuilder("200 Preferences loaded:");
-            preferences.forEach((key, value) -> response.append(String.format(" %s %s,", key, value)));
-
-            if (response.charAt(response.length() - 1) == ',') {
-                response.deleteCharAt(response.length() - 1);
-            }
+            context.getKeys().forEach(key -> response.append(String.format(" %s %s", key, context.get(key))));
 
             out.println(response.toString());
         } catch (IOException e) {

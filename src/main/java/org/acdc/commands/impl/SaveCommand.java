@@ -21,13 +21,25 @@ public class SaveCommand implements Command {
         }
         File preferenceFile = new File(String.format("%s.txt", sessionId));
         try (PrintWriter fileWriter = new PrintWriter(preferenceFile)) {
-            Set<String> keys = context.getKeys();
-            for (String key : keys) {
-                String value = context.get(key);
-                fileWriter.printf("%s : %s%n", key, value);
-            }
+//            Set<String> keys = context.getKeys();
+//            for (String key : keys) {
+//                String value = context.get(key);
+//                fileWriter.printf("%s : %s%n", key, value);
+//            }
+
+            context.getKeys().stream()
+                    .filter(k -> onlySpecified(arguments, k))
+                    .forEach(key -> fileWriter.println(key +"="+context.get(key)));
         }
         out.println("200 Preferences Saved");
         return true;
+    }
+
+    private boolean onlySpecified(List<String> arguments, String key) {
+        if (arguments.isEmpty()) {
+                return true;
+        } else {
+            return arguments.contains(key);
+        }
     }
 }
